@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI 스마트홈 시스템</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:linear-gradient(135deg,#0f172a,#1e293b);
+      font-family:Arial,sans-serif;
+      color:white;
+    }
+
+    .container{
+      width:380px;
+      padding:25px;
+      border-radius:20px;
+      background:#111827;
+      box-shadow:0 15px 35px rgba(0,0,0,0.4);
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:20px;
+      color:#38bdf8;
+    }
+
+    .card{
+      background:#1e293b;
+      padding:15px;
+      border-radius:15px;
+      margin-bottom:15px;
+    }
+
+    .sensor{
+      margin:10px 0;
+      font-size:18px;
+    }
+
+    .status{
+      margin-top:10px;
+      padding:10px;
+      border-radius:10px;
+      background:#0f172a;
+      color:#facc15;
+      font-weight:bold;
+    }
+
+    button{
+      width:100%;
+      height:50px;
+      border:none;
+      border-radius:12px;
+      margin-top:10px;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.2s;
+    }
+
+    button:hover{
+      transform:translateY(-2px);
+    }
+
+    .ai-btn{
+      background:#38bdf8;
+      color:white;
+      font-weight:bold;
+    }
+
+    .tts-btn{
+      background:#22c55e;
+      color:white;
+      font-weight:bold;
+    }
+
+    .login-btn{
+      background:#f97316;
+      color:white;
+      font-weight:bold;
+    }
+
+    .guide{
+      margin-top:15px;
+      text-align:center;
+      color:#94a3b8;
+      font-size:13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>AI 스마트홈 시스템</h1>
+
+    <div class="card">
+      <h3>센서 데이터</h3>
+
+      <div class="sensor">
+        🌡 온도 : <span id="temp">28</span>°C
+      </div>
+
+      <div class="sensor">
+        💡 조도 : <span id="light">75</span>%
+      </div>
+
+      <div class="sensor">
+        ⚡ 전력 사용량 : <span id="power">420</span>W
+      </div>
+
+      <div class="status" id="aiResult">
+        AI 분석 결과가 표시됩니다.
+      </div>
+    </div>
+
+    <button class="ai-btn" onclick="analyzeData()">
+      AI 분석 실행
+    </button>
+
+    <button class="tts-btn" onclick="speakResult()">
+      음성 안내 실행
+    </button>
+
+    <button class="login-btn" onclick="login()">
+      Firebase 로그인
+    </button>
+
+    <div class="guide">
+      Firebase + AI + TTS 기반 스마트홈 시스템
+    </div>
+
+  </div>
+
+  <script>
+
+    const aiResult = document.getElementById("aiResult");
+
+    function analyzeData(){
+
+      const temp = document.getElementById("temp").innerText;
+      const power = document.getElementById("power").innerText;
+
+      let message = "";
+
+      if(temp >= 30){
+        message += "현재 실내 온도가 높습니다. 냉방 사용을 추천합니다. ";
+      }else{
+        message += "현재 실내 온도는 적절합니다. ";
+      }
+
+      if(power >= 400){
+        message += "전력 사용량이 높아 절전 모드가 필요합니다.";
+      }else{
+        message += "전력 사용량이 정상 범위입니다.";
+      }
+
+      aiResult.innerText = message;
+    }
+
+    function speakResult(){
+
+      const text = aiResult.innerText;
+
+      const utterance = new SpeechSynthesisUtterance(text);
+
+      utterance.lang = "ko-KR";
+
+      speechSynthesis.speak(utterance);
+    }
+
+    function login(){
+      alert("Firebase Authentication 로그인 기능 연결 예정");
+    }
+
+  </script>
+
+</body>
+</html>
